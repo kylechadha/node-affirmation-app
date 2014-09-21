@@ -21,36 +21,44 @@ module.exports = function(passport) {
   // ----------------------------------------------
 
   passport.use('local-signup', new localStrategy( {
-    usernameField : 'email',
+    usernameField : 'phone',
     passwordField : 'password',
     passReqToCallback : true
   },
   // ** Check nodejitsu docs, learn more about how done works.
-  function(req, email, password, done) {
+  function(req, phone, password, done) {
 
     // ** Check out docs for process.nextTick as well
     // asynchronous
     // User.findOne wont fire unless data is sent back
     process.nextTick(function() {
 
-      // find a user whose email is the same as the forms email
-      User.findOne({ 'local.email' :  email }, function(err, user) {
+      // find a user whose phone is the same as the forms phone
+      User.findOne({ 'local.phone' :  phone }, function(err, user) {
 
         // if there are any errors, return the error
         if (err) {
           return done(err);
         }
 
-        // check to see if theres already a user with that email
+        // check to see if theres already a user with that phone
         if (user) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            return done(null, false, req.flash('userMessage', 'That phone is already taken.'));
         } else {
-          // if there is no user with that email
+          // if there is no user with that phone
           // create the user
           var newUser = new User();
 
           // set the user's local credentials
-          newUser.local.email = email;
+          newUser.local.phone = phone;
+          newUser.local.name = req.body.firstname;
+          newUser.local.email = req.body.email;
+          if (req.body.alerttext) {
+            newUser.local.alertType.push('text');
+          }
+          if (req.body.alertemail) {
+            newUser.local.alertType.push('email');
+          }
           newUser.local.password = newUser.generateHash(password);
 
           // save the user

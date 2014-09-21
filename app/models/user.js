@@ -12,7 +12,7 @@ var userSchema = mongoose.Schema({
     name : String,
     email : String,
     password : String,
-    alertType : String,
+    alertType : Array,
     timeOfDay : String,
     affectionLevel : String,
     affirmationType : String
