@@ -25,10 +25,10 @@ module.exports = function(passport) {
     passwordField : 'password',
     passReqToCallback : true
   },
-  // ** WHAT IS DONE HERE? USED MANY PLACES. CHECK NODEJITSU DOCS.
+  // ** Check nodejitsu docs, learn more about how done works.
   function(req, email, password, done) {
 
-    // ** WHAT IS PROCESS? CHECK NODEJITSU DOCS.
+    // ** Check out docs for process.nextTick as well
     // asynchronous
     // User.findOne wont fire unless data is sent back
     process.nextTick(function() {
