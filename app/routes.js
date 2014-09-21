@@ -3,7 +3,7 @@ module.exports = function(app, passport) {
   // Index Route
   // ----------------------------------------------
   app.get('/', function(req, res) {
-    res.render('index.ejs', { message: req.flash('userMessage') });
+    res.render('index', { message: req.flash('userMessage') });
   });
 
   app.post('/', passport.authenticate('local-signup', {
@@ -12,11 +12,11 @@ module.exports = function(app, passport) {
     failureFlash : true // allow flash messages
   }));
 
-  
+
   // Login Routes
   // ----------------------------------------------
   app.get('/login', function(req, res) {
-    res.render('login.ejs', { message: req.flash('loginMessage') });
+    res.render('login', { message: req.flash('loginMessage') });
   });
 
   app.post('/login', passport.authenticate('local-login', {
@@ -31,7 +31,7 @@ module.exports = function(app, passport) {
       // we will want this protected so you have to be logged in to visit
       // we will use route middleware to verify this (the isLoggedIn function)
   app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('profile.ejs', {
+    res.render('profile', {
       user : req.user
     });
   });
