@@ -3,7 +3,7 @@ module.exports = function(app, passport) {
   // Index Route
   // ----------------------------------------------
   app.get('/', function(req, res) {
-    res.render('index', { message: req.flash('userMessage') });
+    res.render('layout', { message: req.flash('userMessage') });
   });
 
   // ** Validation goes here!
