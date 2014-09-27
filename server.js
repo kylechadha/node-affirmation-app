@@ -16,12 +16,6 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 var configDB = require('./config/database.js');
 
-var sass = require('node-sass');
-var scssfile = './public/stylesheets/master.scss'
-sass.render({
-  file: scssfile
-});
-
 
 // Configuration
 // ----------------------------------------------
@@ -37,7 +31,7 @@ app.use(bodyParser());          // get information from html forms
 app.set('view engine', 'ejs');  // set up ejs for templating
 app.set('views', __dirname + '/public/views');
 // Do we need this?
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 
 // Authentication
