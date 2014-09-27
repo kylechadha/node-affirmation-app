@@ -6,6 +6,7 @@ module.exports = function(app, passport) {
     res.render('index', { message: req.flash('userMessage') });
   });
 
+  // ** Validation goes here!
   app.post('/', passport.authenticate('local-signup', {
     successRedirect : '/profile', // redirect to the secure profile section
     failureRedirect : '/', // redirect back to the signup page if there is an error
