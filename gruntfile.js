@@ -9,12 +9,15 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      source: {
-        files: ['**/*.scss'],
-        tasks: ['sass'],
+      ejs: {
+        files: ['**/*.ejs', '**/*.css'],
         options: {
           livereload: true,
         }
+      },
+      scss: {
+        files: ['**/*.scss'],
+        tasks: ['sass']
       }
     }
   });
