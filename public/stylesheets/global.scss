@@ -1,0 +1,19 @@
+///
+/// GLOBAL SCSS FILE
+/// ----------------------------------
+
+
+// Global Styles
+// -----------------------------------
+html,
+body {
+  height: 100%;
+}
+
+
+// Global Classes
+// -----------------------------------
+.flex {
+  display: flex;
+  justify-content: center;
+}
