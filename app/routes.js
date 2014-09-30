@@ -1,3 +1,5 @@
+var User = require('./models/user');
+
 module.exports = function(app, passport) {
 
   // Index Route
@@ -6,12 +8,26 @@ module.exports = function(app, passport) {
     res.render('layout', { message: req.flash('userMessage') });
   });
 
-  // ** Validation goes here!
+  // Sign Up Route ** Validation goes here! ** 
   app.post('/', passport.authenticate('local-signup', {
     successRedirect : '/profile', // redirect to the secure profile section
     failureRedirect : '/', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
   }));
+
+
+  // Users Route
+  // ----------------------------------------------
+  app.get('/users', function(req, res) {
+
+    User.find(function(err, users) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(users);
+    });
+
+  });
 
 
   // Login Routes
