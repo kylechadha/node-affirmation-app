@@ -1,9 +1,10 @@
-angular.module('affController', [])
+angular.module('melonController', [])
 
   // inject the Todo service factory into our controller
   .controller('mainController', function($scope, $http, Users) {
     $scope.userData = {};
     console.log('Angular is linked up!');
+
 
     // Get all users
     // ----------------------------------------------
@@ -15,9 +16,10 @@ angular.module('affController', [])
         $scope.users = data;
         console.log(data);
       })
-      // .error(function(data) {
-      //   console.log('Error: ' + data);
-      // });
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+
 
     // Create a new user (will have to see how this reconciles with auth / passport)
     // ----------------------------------------------
@@ -32,13 +34,14 @@ angular.module('affController', [])
             $scope.users = data;
             console.log(data);
           })
-          // .error(function(data) {
-          //   console.log('Error: ' + data);
-          // });
+          .error(function(data) {
+            console.log('Error: ' + data);
+          });
 
       }
 
     };
+
 
     // Delete a user
     // ----------------------------------------------
@@ -49,9 +52,9 @@ angular.module('affController', [])
         $scope.users = data;
         console.log(data);
       })
-      // .error(function(data) {
-      //   console.log('Error: ' + data);
-      // });
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
 
     };
 
