@@ -52,12 +52,12 @@ module.exports = function(passport) {
           // set the user's local credentials
           newUser.local.phone = phone;
           newUser.local.name = req.body.firstname;
-          newUser.local.email = req.body.email;
+          newUser.local.gender = req.body.gender;
           if (req.body.alerttext) {
             newUser.local.alertType.push('text');
           }
-          if (req.body.alertemail) {
-            newUser.local.alertType.push('email');
+          if (req.body.alertgender) {
+            newUser.local.alertType.push('gender');
           }
           newUser.local.password = newUser.generateHash(password);
 
@@ -81,15 +81,15 @@ module.exports = function(passport) {
   // ----------------------------------------------
 
   passport.use('local-login', new localStrategy({
-    usernameField : 'email',
+    usernameField : 'phone',
     passwordField : 'password',
     passReqToCallback : true // allows us to pass back the entire request to the callback
   },
-  function(req, email, password, done) { // callback with email and password from our form
+  function(req, phone, password, done) { // callback with phone and password from our form
 
-    // find a user whose email is the same as the forms email
+    // find a user whose phone is the same as the forms phone
     // we are checking to see if the user trying to login already exists
-    User.findOne({ 'local.email' :  email }, function(err, user) {
+    User.findOne({ 'local.phone' :  phone }, function(err, user) {
 
       // if there are any errors, return the error before anything else
       if (err) {
