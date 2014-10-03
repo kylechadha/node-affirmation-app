@@ -28,6 +28,8 @@ module.exports = function(passport) {
   // ** Check nodejitsu docs, learn more about how done works.
   function(req, phone, password, done) {
 
+    phone = phone.replace(/\D/g,"");
+
     // ** Check out docs for process.nextTick as well
     // asynchronous
     // User.findOne wont fire unless data is sent back
@@ -43,7 +45,7 @@ module.exports = function(passport) {
 
         // check to see if theres already a user with that phone
         if (user) {
-            return done(null, false, req.flash('userMessage', 'That phone is already taken.'));
+            return done(null, false, req.flash('userMessage', 'Whoops! Looks like someone has already signed up with that phone number.'));
         } else {
           // if there is no user with that phone
           // create the user
@@ -53,12 +55,6 @@ module.exports = function(passport) {
           newUser.local.phone = phone;
           newUser.local.name = req.body.firstname;
           newUser.local.gender = req.body.gender;
-          if (req.body.alerttext) {
-            newUser.local.alertType.push('text');
-          }
-          if (req.body.alertgender) {
-            newUser.local.alertType.push('gender');
-          }
           newUser.local.password = newUser.generateHash(password);
 
           // save the user

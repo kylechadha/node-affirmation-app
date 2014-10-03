@@ -10,15 +10,11 @@ var userSchema = mongoose.Schema({
   local : {
     phone : Number,
     name : String,
-    email : String,
+    gender : String,
     password : String,
-    alertType : Array,
     timeOfDay : String,
-    affectionLevel : String,
     affirmationType : String
   }
-
-  // ** Still need to add social schema, if so desired.
 
 });
 
