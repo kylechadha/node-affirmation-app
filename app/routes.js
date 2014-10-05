@@ -8,11 +8,22 @@ module.exports = function(app, passport) {
     res.render('layout', { message: req.flash('userMessage') });
   });
 
-  // Sign Up Route ** Validation goes here! ** 
-  app.post('/', passport.authenticate('local-signup', {
-    successRedirect : '/profile', // redirect to the secure profile section
-    failureRedirect : '/', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
+  // Sign Up Route
+  app.post('/', function(req, res, next) {
+
+    req.body.phone = req.body.phone.replace(/\D/g,"");
+
+    if (req.body.phone.length !== 10) {
+      req.flash('userMessage', 'Sorry! You need to enter a valid 10 digit phone number.')
+      res.redirect('/');
+    } else {
+      next();
+    }
+
+  }, passport.authenticate('local-signup', {
+      successRedirect : '/profile', // redirect to the secure profile section
+      failureRedirect : '/', // redirect back to the signup page if there is an error
+      failureFlash : true // allow flash messages
   }));
 
 
