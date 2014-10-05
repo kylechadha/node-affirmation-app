@@ -1,6 +1,10 @@
 var localStrategy = require('passport-local').Strategy;
 var User = require('../app/models/user.js');
 
+var accountSid = 'AC70251dcb08650526e518464b2b439902';
+var authToken = "26117d82fce039b4de1666d3d44ecc91";
+var client = require('twilio')(accountSid, authToken);
+
 module.exports = function(passport) {
 
   // Session Management
@@ -64,7 +68,15 @@ module.exports = function(passport) {
             }
             return done(null, newUser);
           });
-          
+
+          client.messages.create({
+              body: "Yes we're in business!!",
+              to: "+18582310672",
+              from: "+18586838697"
+          }, function(err, message) {
+              console.log(message);
+              // process.stdout.write(message.sid);
+          });
         }
 
       });
