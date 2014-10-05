@@ -14,9 +14,22 @@ module.exports = function(app, passport) {
     req.body.phone = req.body.phone.replace(/\D/g,"");
 
     if (req.body.phone.length !== 10) {
-      req.flash('userMessage', 'Sorry! You need to enter a valid 10 digit phone number.')
+      req.flash('userMessage', 'Sorry! You need to enter a valid 10 digit phone number.');
       res.redirect('/');
-    } else {
+    }
+    else if (!req.body.firstname) {
+      req.flash('userMessage', 'Please enter your first name.');
+      res.redirect('/');
+    }
+    else if (!req.body.gender) {
+      req.flash('userMessage', 'Please enter your gender.');
+      res.redirect('/');
+    }
+    else if (req.body.password < 6 || req.body.password > 30) {
+      req.flash('userMessage', 'Please enter a valid password.');
+      res.redirect('/');
+    }
+    else {
       next();
     }
 
