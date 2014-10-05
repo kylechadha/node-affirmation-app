@@ -8,13 +8,15 @@
       
     </div>
 
+
     <div class="index__main__signup">
 
-      <% if (message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
-      <% } %>
-
       <form action="/" method="post" class="well">
+
+        <% if (message.length > 0) { %>
+          <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+
         <h4 class="text-center">Sign up for Melon and get affirmations to brighten your day!</h4><br>
         <div class="form-group">
           <label>Phone number:</label>
