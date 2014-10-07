@@ -76,6 +76,16 @@ module.exports = function(passport) {
           var welcomeName = titleCase(req.body.firstname);
           var welcomeMessage = 'Welcome to Melon, ' + welcomeName + "! You're loved and appreciated by many!";
 
+          client.messages.create({
+            body: welcomeMessage,
+            from: "+13239995226",
+            to: phone
+          }, function(err, message) {
+            console.log(message);
+          });
+
+          var morningMessage = 'Good morning!'
+
           setInterval(function() {
             client.messages.create({
               body: welcomeMessage,
@@ -84,7 +94,7 @@ module.exports = function(passport) {
             }, function(err, message) {
               console.log(message);
             });
-          }, 30000)
+          }, 86400000)
         }
 
       });
