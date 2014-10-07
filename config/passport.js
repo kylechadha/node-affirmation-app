@@ -73,8 +73,8 @@ module.exports = function(passport) {
             return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); } );
           }
 
-          var welcomeName = titleCase(req.body.firstname);
-          var welcomeMessage = 'Welcome to Melon, ' + welcomeName + "! You're loved and appreciated by many!";
+          var userName = titleCase(req.body.firstname);
+          var welcomeMessage = 'Welcome to Melon, ' + userName + "! You're loved and appreciated by many!";
 
           client.messages.create({
             body: welcomeMessage,
@@ -84,17 +84,20 @@ module.exports = function(passport) {
             console.log(message);
           });
 
-          var morningMessage = 'Good morning!'
+          var morningMessage = 'Good morning, ' + userName + '! Today is a new day, and a fresh opportunity for you to focus on your goals, achieve, and be a discplined, confident man. Go forth with purpose!'
 
-          setInterval(function() {
-            client.messages.create({
-              body: welcomeMessage,
-              from: "+13239995226",
-              to: phone
-            }, function(err, message) {
-              console.log(message);
-            });
-          }, 86400000)
+          setTimeout(function() {
+            setInterval(function() {
+              client.messages.create({
+                body: morningMessage,
+                from: "+13239995226",
+                to: phone
+              }, function(err, message) {
+                console.log(message);
+              });
+            }, 86400000)
+          }, 28800000)
+
         }
 
       });
