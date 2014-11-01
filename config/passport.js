@@ -1,10 +1,6 @@
 var localStrategy = require('passport-local').Strategy;
 var User = require('../app/models/user.js');
-
-// May want to move this to separate twilio module
-var accountSid = 'AC30ea0b2e26c3293997fbf599981fd28c';
-var authToken = "0972510307bc4eb384fc54dd4fb2fe2c";
-var client = require('twilio')(accountSid, authToken);
+var twilio = require('../config/twilio.js');
 
 module.exports = function(passport) {
 
@@ -76,27 +72,13 @@ module.exports = function(passport) {
           var userName = titleCase(req.body.firstname);
           var welcomeMessage = 'Welcome to Melon, ' + userName + "! You're loved and appreciated by many!";
 
-          client.messages.create({
+          twilio.messages.create({
             body: welcomeMessage,
             from: "+13239995226",
             to: phone
           }, function(err, message) {
             console.log(message);
           });
-
-          var morningMessage = 'Good morning, ' + userName + '! Today is a new day, and a fresh opportunity for you to focus on your goals, achieve, and be a discplined, confident man. Go forth with purpose!'
-
-          setTimeout(function() {
-            setInterval(function() {
-              client.messages.create({
-                body: morningMessage,
-                from: "+13239995226",
-                to: phone
-              }, function(err, message) {
-                console.log(message);
-              });
-            }, 86400000)
-          }, 28800000)
 
         }
 
