@@ -12,8 +12,7 @@ var userSchema = mongoose.Schema({
     name : String,
     gender : String,
     password : String,
-    timeOfDay : String,
-    affirmationType : String
+    timeofday : Array
   }
 
 });

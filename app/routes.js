@@ -21,10 +21,14 @@ module.exports = function(app, passport) {
       req.flash('userMessage', 'Please enter your first name.');
       res.redirect('/');
     }
-    else if (!req.body.gender) {
-      req.flash('userMessage', 'Please enter your gender.');
+    else if (!req.body.timeofday) {
+      req.flash('userMessage', 'Please let us know when you would like to receive affirmations.');
       res.redirect('/');
     }
+    // else if (!req.body.gender) {
+    //   req.flash('userMessage', 'Please enter your gender.');
+    //   res.redirect('/');
+    // }
     else if (req.body.password < 6 || req.body.password > 30) {
       req.flash('userMessage', 'Please enter a valid password.');
       res.redirect('/');

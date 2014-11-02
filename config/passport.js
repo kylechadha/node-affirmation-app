@@ -26,10 +26,9 @@ module.exports = function(passport) {
     passwordField : 'password',
     passReqToCallback : true
   },
-  // ** Check nodejitsu docs, learn more about how done works.
   function(req, phone, password, done) {
 
-    // ** Check out docs for process.nextTick as well
+    // ** Check out docs for process.nextTick and async flow
     // asynchronous
     // User.findOne wont fire unless data is sent back
     process.nextTick(function() {
@@ -53,8 +52,20 @@ module.exports = function(passport) {
           // set the user's local credentials
           newUser.local.phone = phone;
           newUser.local.name = req.body.firstname;
-          newUser.local.gender = req.body.gender;
           newUser.local.password = newUser.generateHash(password);
+          req.body.timeofday.forEach(function(element) {
+            switch (element) {
+              case 'morning':
+                newUser.local.timeofday.push('8:00')
+                break;
+              case 'afternoon':
+                newUser.local.timeofday.push('13:00')
+                break;
+              case 'evening':
+                newUser.local.timeofday.push('22:00')
+                break;
+            }
+          })
 
           // save the user
           newUser.save(function(err) {
@@ -74,10 +85,15 @@ module.exports = function(passport) {
 
           twilio.messages.create({
             body: welcomeMessage,
-            from: "+13239995226",
+            from: "+15005550006",
+            // from: "+13239995226",
             to: phone
-          }, function(err, message) {
-            console.log(message);
+          }, function(error, message) {
+            if (!error) {
+              console.log('Welcome message sent on: ' + message.dateCreated + ' to ' + message.to);
+            } else {
+              console.log('There was an error with the Twilio client. Ugh whatd you do.')
+            }
           });
 
         }

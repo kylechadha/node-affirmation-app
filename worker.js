@@ -22,12 +22,13 @@ User.find().exec(function(error, users, done) {
 
     var currentHour = new Date().getHours();
 
+    // These are set in GMT, corresponding to 8AM, 1PM, and 10PM EST.
     switch (currentHour) {
       case 13:
         console.log('Morning affirmations are being sent!');
         sendAffirmations(users[i], currentHour);
         break;
-      case 17:
+      case 18:
         console.log('Afternoon affirmations are being sent!');
         sendAffirmations(users[i], currentHour);
         break;
