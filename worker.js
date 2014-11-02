@@ -20,30 +20,50 @@ User.find().exec(function(error, users, done) {
 
   for (var i = 0; i < users.length; i++) {
 
-    var currentTime = new Date();
-    console.log(currentTime.getHours());
-    // heroku server is on GMT, ie: +5 hours from EST
+    var currentHour = new Date().getHours();
 
-    var affirmation = "Hey mukie, guess what? ... You're hot!";
-
-    twilio.messages.create({
-      body: affirmation,
-      // from: "+13239995226",
-      from: "+15005550006",
-      to: users[i].local.phone
-    }, function(error, message) {
-
-      if (!error) {
-        console.log('Message sent on: ' + message.dateCreated + ' to ' + message.to);
-      }
-      else {
-        console.log('There was an error with the Twilio client. Ugh whatd you do.')
-      }
-
-    });
+    switch (currentHour) {
+      case 13:
+        console.log('Morning affirmations are being sent!');
+        sendAffirmations(users[i], currentHour);
+        break;
+      case 17:
+        console.log('Afternoon affirmations are being sent!');
+        sendAffirmations(users[i], currentHour);
+        break;
+      case 3:
+        console.log('Evening affirmations are being sent!');
+        sendAffirmations(users[i], currentHour);
+        break;
+    }
 
   }
 
   mongoose.disconnect();
 
 });
+
+
+var sendAffirmations = function(user, time) {
+
+  var affirmation = "Hey mukie, guess what? ... You're hot!";
+  var userPreferences = user.local.times;
+
+  if (userPreferences.indexOf(time) > -1) {
+
+    twilio.messages.create({
+      body: affirmation,
+      // from: "+13239995226",
+      from: "+15005550006",
+      to: user.local.phone
+    }, function(error, message) {
+      if (!error) {
+        console.log('Message sent on: ' + message.dateCreated + ' to ' + message.to);
+      } else {
+        console.log('There was an error with the Twilio client. Ugh whatd you do.')
+      }
+    });
+
+  } 
+
+}
