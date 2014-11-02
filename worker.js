@@ -20,21 +20,23 @@ User.find().exec(function(error, users, done) {
 
   for (var i = 0; i < users.length; i++) {
 
-    var currentHour = new Date().getHours();
+    var currentDate = new Date();
+    var currentTime = currentDate.getHours() + ':00';
+    console.log(currentTime);
 
     // These are set in GMT, corresponding to 8AM, 1PM, and 10PM EST.
-    switch (currentHour) {
-      case 13:
+    switch (currentTime) {
+      case '13:00':
         console.log('Morning affirmations are being sent!');
-        sendAffirmations(users[i], currentHour);
+        sendAffirmations(users[i], currentTime);
         break;
-      case 18:
+      case '22:00':
         console.log('Afternoon affirmations are being sent!');
-        sendAffirmations(users[i], currentHour);
+        sendAffirmations(users[i], currentTime);
         break;
-      case 3:
+      case '3:00':
         console.log('Evening affirmations are being sent!');
-        sendAffirmations(users[i], currentHour);
+        sendAffirmations(users[i], currentTime);
         break;
     }
 
@@ -47,15 +49,15 @@ User.find().exec(function(error, users, done) {
 
 var sendAffirmations = function(user, time) {
 
-  var affirmation = "Hey mukie, guess what? ... You're hot!";
-  var userPreferences = user.local.times;
+  var affirmation = "Hope you're having a great day! This is the affirmation for " + user.local.name + " at: " + time;
+  var userPreferences = user.local.timeofday;
 
   if (userPreferences.indexOf(time) > -1) {
 
     twilio.messages.create({
       body: affirmation,
-      // from: "+13239995226",
-      from: "+15005550006",
+      from: "+13239995226",
+      // from: "+15005550006",
       to: user.local.phone
     }, function(error, message) {
       if (!error) {

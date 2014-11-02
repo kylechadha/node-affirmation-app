@@ -54,15 +54,17 @@ module.exports = function(passport) {
           newUser.local.name = req.body.firstname;
           newUser.local.password = newUser.generateHash(password);
           req.body.timeofday.forEach(function(element) {
+            // These times are currently set in GMT to correspond to 8AM, 1PM, and 10PM EST
+            // In the future, this will all be dynamic based on the user location / time zone
             switch (element) {
               case 'morning':
-                newUser.local.timeofday.push('8:00')
-                break;
-              case 'afternoon':
                 newUser.local.timeofday.push('13:00')
                 break;
-              case 'evening':
+              case 'afternoon':
                 newUser.local.timeofday.push('22:00')
+                break;
+              case 'evening':
+                newUser.local.timeofday.push('3:00')
                 break;
             }
           })
