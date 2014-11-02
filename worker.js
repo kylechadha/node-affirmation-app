@@ -30,7 +30,7 @@ User.find().exec(function(error, users, done) {
         console.log('Morning affirmations are being sent!');
         sendAffirmations(users[i], currentTime);
         break;
-      case '22:00':
+      case '23:00':
         console.log('Afternoon affirmations are being sent!');
         sendAffirmations(users[i], currentTime);
         break;
