@@ -1,10 +1,4 @@
 
-// Require everything you need, connection to mongoose, twilio etc.
-
-// At the simpliest:
-// You would iterate through the collection of users
-// For each, send an affirmation at random
-
 // In a realistic case:
 // - Run scheduler every hour
 // - Iterate through the collection of users
@@ -18,33 +12,31 @@ mongoose.connect(configDB.url);
 var User = require('./app/models/user.js');
 var twilio = require('./config/twilio.js');
 
-// User.findOne({ 'local.phone' :  '8582310672' }, function(err, user) {
+User.find().exec(function(error, users, done) {
 
-//   user.phone = '234';
-//   user.save();
+  if (error) {
+    return done(error);
+  }
 
-//   console.log(user);
-// });
+  for (var i = 0; i < users.length; i++) {
 
+    var currentTime = new Date();
+    console.log(currentTime.getHours());
 
-User.find().exec(function(err, data) {
-  console.log(data);
-  response.json(data[0]);
+    var message = "Hey mukie, guess what? ... You're hot!";
+
+    // twilio.messages.create({
+    //   body: message,
+    //   from: "+13239995226",
+    //   to: users[i].local.phone
+    // }, function(err, message) {
+    //   console.log(message);
+    // });
+
+  }
+
+  done(process.exit());
+
 });
 
-// User.find().exec(function(error, user) {
-
-//   console.log('reached');
-
-//   if (error) {
-//     return done(error);
-//   }
-
-//   if (user) {
-//     console.log(user);
-//   }
-
-// });
-
 console.log('Scheduler successfully ran :]');
-process.exit();
