@@ -31,6 +31,9 @@ User.find().exec(function(error, users, done) {
         console.log('Evening affirmations are being sent!');
         sendAffirmations(users[i], currentTime);
         break;
+      default:
+        console.log('Not time to send out any affirmations :]');
+        break;
     }
 
   }

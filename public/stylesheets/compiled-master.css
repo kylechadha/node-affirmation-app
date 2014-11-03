@@ -8,7 +8,7 @@ html, body {
 .index {
   height: 100%; }
   .index .index__main {
-    height: 100%; }
+    height: 90%; }
     .index .index__main .index__main__teaser {
       height: 100%; }
       .index .index__main .index__main__teaser img {
