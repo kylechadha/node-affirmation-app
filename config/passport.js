@@ -61,7 +61,7 @@ module.exports = function(passport) {
                 newUser.local.timeofday.push('13:00')
                 break;
               case 'afternoon':
-                newUser.local.timeofday.push('23:00')
+                newUser.local.timeofday.push('18:00')
                 break;
               case 'evening':
                 newUser.local.timeofday.push('3:00')

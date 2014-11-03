@@ -1,16 +1,10 @@
-
-// In a realistic case:
-// - Run scheduler every hour
-// - Iterate through the collection of users
-// - For each, check their timezone, and then check if its 8AM, 12PM, or 10PM
-// - Then check their preferences, if its 8AM, and they wanted a morning text, send them one, etc.
-
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');
 mongoose.connect(configDB.url);
 
 var User = require('./app/models/user.js');
 var twilio = require('./config/twilio.js');
+
 
 User.find().exec(function(error, users, done) {
 
@@ -22,7 +16,6 @@ User.find().exec(function(error, users, done) {
 
     var currentDate = new Date();
     var currentTime = currentDate.getHours() + ':00';
-    console.log(currentTime);
 
     // These are set in GMT, corresponding to 8AM, 1PM, and 10PM EST.
     switch (currentTime) {
@@ -30,7 +23,7 @@ User.find().exec(function(error, users, done) {
         console.log('Morning affirmations are being sent!');
         sendAffirmations(users[i], currentTime);
         break;
-      case '23:00':
+      case '18:00':
         console.log('Afternoon affirmations are being sent!');
         sendAffirmations(users[i], currentTime);
         break;
@@ -47,12 +40,12 @@ User.find().exec(function(error, users, done) {
 });
 
 
-var sendAffirmations = function(user, time) {
+var sendAffirmations = function(user, currentTime) {
 
-  var affirmation = "Hope you're having a great day! This is the affirmation for " + user.local.name + " at: " + time;
+  var affirmation = "Hope you're having a great day! Debug: This is the affirmation for " + user.local.name + " at: " + currentTime + '.';
   var userPreferences = user.local.timeofday;
 
-  if (userPreferences.indexOf(time) > -1) {
+  if (userPreferences.indexOf(currentTime) > -1) {
 
     twilio.messages.create({
       body: affirmation,
